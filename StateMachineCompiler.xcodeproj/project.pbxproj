@@ -6,9 +6,17 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		BE083C2F19FB57DB00515FB6 /* StateMachineCompilerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE083C2E19FB57DB00515FB6 /* StateMachineCompilerPlugin.swift */; };
+		BE873D8819FB618000B4BBD7 /* PluginUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE873D8719FB618000B4BBD7 /* PluginUtils.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		BE083C2E19FB57DB00515FB6 /* StateMachineCompilerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StateMachineCompilerPlugin.swift; path = classes/StateMachineCompilerPlugin.swift; sourceTree = "<group>"; };
+		BE4AA34B19FB65BB0011448C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BE74BFC819FB3BAD00FC909F /* StateMachineCompiler.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StateMachineCompiler.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE74BFCC19FB3BAD00FC909F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BE873D8719FB618000B4BBD7 /* PluginUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluginUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -25,6 +33,7 @@
 		BE74BFBF19FB3BAD00FC909F = {
 			isa = PBXGroup;
 			children = (
+				BE4AA34B19FB65BB0011448C /* Foundation.framework */,
 				BE74BFCA19FB3BAD00FC909F /* StateMachineCompiler */,
 				BE74BFC919FB3BAD00FC909F /* Products */,
 			);
@@ -42,6 +51,8 @@
 			isa = PBXGroup;
 			children = (
 				BE74BFCB19FB3BAD00FC909F /* Supporting Files */,
+				BE083C2E19FB57DB00515FB6 /* StateMachineCompilerPlugin.swift */,
+				BE873D8719FB618000B4BBD7 /* PluginUtils.swift */,
 			);
 			path = StateMachineCompiler;
 			sourceTree = "<group>";
@@ -120,6 +131,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE873D8819FB618000B4BBD7 /* PluginUtils.swift in Sources */,
+				BE083C2F19FB57DB00515FB6 /* StateMachineCompilerPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,11 +216,17 @@
 		BE74BFD019FB3BAD00FC909F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = StateMachineCompiler/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Application Support/Developer/Shared/Xcode/Plug-ins";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Debug;
@@ -215,11 +234,16 @@
 		BE74BFD119FB3BAD00FC909F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = StateMachineCompiler/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Application Support/Developer/Shared/Xcode/Plug-ins";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Release;
@@ -243,6 +267,7 @@
 				BE74BFD119FB3BAD00FC909F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
