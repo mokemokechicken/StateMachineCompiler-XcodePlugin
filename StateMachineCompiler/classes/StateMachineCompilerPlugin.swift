@@ -27,7 +27,27 @@ public class StateMachineCompilerPlugin : NSObject {
     }
     
     func setup() {
-//        PluginUtils.loggingAllNotifications()
+
     }
 
 }
+
+/*
+public class PluginUtils : NSObject {
+    public class func loggingAllNotifications() {
+        NSNotificationCenter.defaultCenter().addObserverForName(nil, object: nil, queue: nil) { note in
+            if note.name.substringToIndex(2) != "NS" {
+                return
+            }
+            NSLog("Notification: \(note.name)")
+        }
+    }
+}
+
+extension String {
+    // MARK: - sub String
+    func substringToIndex(index:Int) -> String {
+        return self.substringToIndex(advance(self.startIndex, index))
+    }
+}
+*/
