@@ -19,3 +19,5 @@ profile
 
 #CocoaPod
 Pods/*
+
+tmp/

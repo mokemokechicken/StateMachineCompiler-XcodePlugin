@@ -43,24 +43,41 @@ public class StateMachineCompilerPlugin : NSObject {
     
     func generateSMC(sender: AnyObject) {
         NSLog("generateSMC Called")
-        if let url = currentFileURL() {
-            NSLog("generateSMC Called: \(url)")
-            if url.pathExtension != "sm" {
-                return
-            }
-            if let smc = NSData(contentsOfURL: url) {
-                let api = SMCAPI.Generate(baseUrl: API_BASE_URL)
-                api.request(.Swift, smc: smc) { response in
-                    if response.isSuccess() {
-                        if let body = response.data {
-                            if let content = NSString(data: body, encoding: NSUTF8StringEncoding) {
-                                NSLog(content)
-                            }
+        var url = currentFileURL()
+        if let smc = loadCurrentSMFile(url) {
+            let api = SMCAPI.Generate(baseUrl: API_BASE_URL)
+            api.request(.Swift, smc: smc) { [unowned self] response in
+                if !response.isSuccess() { return }
+                if let body = response.data {
+                    let json = NSJSONSerialization.JSONObjectWithData(body, options: NSJSONReadingOptions.AllowFragments, error: nil) as NSDictionary
+                    if let code = json.objectForKey("impl") as? String {
+                        let savePath = self.pathToSave(url!.path!)
+                        let result = self.saveCode(code, path: savePath)
+                        if result {
+                            NSLog("create \(savePath)")
                         }
                     }
                 }
             }
         }
+    }
+    
+    func loadCurrentSMFile(u: NSURL?) -> NSData? {
+        if let url = u {
+            if url.pathExtension != "sm" {
+                return nil
+            }
+            return NSData(contentsOfURL: url)
+        }
+        return nil
+    }
+    
+    func saveCode(code: String, path: String) -> Bool {
+        return code.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
+    }
+    
+    func pathToSave(smPath: String) -> String {
+        return smPath.stringByDeletingPathExtension + ".swift"
     }
     
     func currentFileURL() -> NSURL? {
@@ -117,7 +134,7 @@ class SMCAPI {
     
     class Generate : Base {
         func request(lang: Language, smc: NSData, callback: (Response) -> Void) {
-            let url = NSURL(string: baseUrl + "/generator/generate")!
+            let url = NSURL(string: baseUrl + "/generator/generate?lang=\(lang.rawValue)")!
             let request = NSMutableURLRequest(URL: url)
             request.HTTPMethod = "POST"
             request.setValue("application/smc", forHTTPHeaderField: "Content-Type")
@@ -129,7 +146,6 @@ class SMCAPI {
             }
         }
     }
-
 }
 
 
