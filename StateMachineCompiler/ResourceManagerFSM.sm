@@ -1,0 +1,64 @@
+%include    petamp-Swift.h
+%class      ResourceManagerAction
+%fsmclass   ResourceManagerFSM
+
+%start      ResourceManagerStateMap::INIT
+
+%map ResourceManagerStateMap
+%%
+
+INIT
+{
+  start CHECKING {}
+}
+
+CHECKING
+Entry { check(); }
+{
+  lack CHEKING_AUTHORIZATION {}
+  ok READY {}
+}
+
+CHEKING_AUTHORIZATION
+Entry { checkAuth(); }
+{
+  auth_ok DOWNLOADING {}
+  invalid CHECKING {}
+}
+
+DOWNLOADING
+Entry { download(); }
+{
+  download IMPORTING {}
+  error SHOWING_DL_ERROR {}
+}
+
+IMPORTING
+Entry { importData(); }
+{
+  done CHECKING {}
+  fatal FATAL {}
+}
+
+SHOWING_DL_ERROR
+Entry { showDLError(); }
+{
+  retry DOWNLOADING {}
+  cancel INIT { cancel(); }
+}
+
+READY
+Entry { ready(); }
+{
+}
+
+FATAL
+Entry { fatalError(); }
+{
+}
+
+Default {
+  Default nil {}
+}
+
+%%
